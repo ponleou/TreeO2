@@ -27,7 +27,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
   type:
     name: Type Check
@@ -45,7 +45,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
       - name: Type check
         run: npm run type-check
@@ -66,7 +66,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
       - name: Lint check
         run: npm run lint
@@ -87,7 +87,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
       - name: TypeScript format check
         run: npm run format:check
@@ -108,7 +108,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
       - name: Prisma format check
         run: npm run prisma:format:check
@@ -132,7 +132,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
       - name: Schema validate
         run: npm run prisma:validate
@@ -174,7 +174,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --verbose
 
       - name: Setup test database
         run: npm run prisma:migrate:deploy
