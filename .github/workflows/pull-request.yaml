@@ -26,15 +26,7 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Setup cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
   type:
@@ -50,16 +42,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Fetch dependencies cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Type check
@@ -78,16 +63,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Fetch dependencies cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Lint check
@@ -106,16 +84,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Fetch dependencies cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: TypeScript format check
@@ -134,16 +105,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Fetch dependencies cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Prisma format check
@@ -165,16 +129,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Fetch dependencies cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Schema validate
@@ -214,16 +171,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Fetch dependencies cache
-        uses: actions/cache@v4
-        id: cache-npm
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
+          cache: npm
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Setup test database
