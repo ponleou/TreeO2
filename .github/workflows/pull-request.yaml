@@ -26,8 +26,14 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Setup cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
+
       - name: Install dependencies
-        run: npm ci --verbose
+        run: npm ci
 
   type:
     name: Type Check
@@ -42,10 +48,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Fetch dependencies cache
+        uses: actions/cache@v4
+        id: cache-npm
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
 
       - name: Install dependencies
-        run: npm ci --verbose
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Type check
         run: npm run type-check
@@ -63,10 +76,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Fetch dependencies cache
+        uses: actions/cache@v4
+        id: cache-npm
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
 
       - name: Install dependencies
-        run: npm ci --verbose
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Lint check
         run: npm run lint
@@ -84,10 +104,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Fetch dependencies cache
+        uses: actions/cache@v4
+        id: cache-npm
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
 
       - name: Install dependencies
-        run: npm ci --verbose
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: TypeScript format check
         run: npm run format:check
@@ -105,10 +132,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Fetch dependencies cache
+        uses: actions/cache@v4
+        id: cache-npm
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
 
       - name: Install dependencies
-        run: npm ci --verbose
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Prisma format check
         run: npm run prisma:format:check
@@ -129,10 +163,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Fetch dependencies cache
+        uses: actions/cache@v4
+        id: cache-npm
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
 
       - name: Install dependencies
-        run: npm ci --verbose
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Schema validate
         run: npm run prisma:validate
@@ -171,10 +212,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Fetch dependencies cache
+        uses: actions/cache@v4
+        id: cache-npm
+        with:
+          path: node_modules
+          key: node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
 
       - name: Install dependencies
-        run: npm ci --verbose
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Setup test database
         run: npm run prisma:migrate:deploy
@@ -194,3 +242,18 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  cleanup:
+    name: Cleanup Cache
+    needs: [tests]
+    if: always()
+    runs-on: ubuntu-slim
+
+    permissions:
+      actions: write
+      
+    steps:
+      - run: gh cache delete "node-modules-cache-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
