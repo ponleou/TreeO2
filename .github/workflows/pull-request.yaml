@@ -28,6 +28,7 @@ jobs:
 
       - name: Setup cache
         uses: actions/cache@v4
+        id: cache-npm
         with:
           path: node_modules
           key: node-modules-${{ hashFiles('package-lock.json') }}
