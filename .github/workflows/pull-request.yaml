@@ -156,6 +156,9 @@ jobs:
     needs: [install]
     runs-on: ubuntu-slim
 
+    env:
+      DATABASE_URL: postgresql://treeo2_user:treeo2_password@localhost:5432/treeo2?schema=public
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
