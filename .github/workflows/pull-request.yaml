@@ -192,7 +192,6 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          NODE_ENV: development
           POSTGRES_USER: treeo2_user
           POSTGRES_PASSWORD: treeo2_password
           POSTGRES_DB: treeo2
