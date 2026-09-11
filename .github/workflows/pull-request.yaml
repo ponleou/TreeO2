@@ -185,7 +185,6 @@ jobs:
     timeout-minutes: 15
 
     env:
-      NODE_ENV: development
       DATABASE_URL: postgresql://treeo2_user:treeo2_password@localhost:5432/treeo2?schema=public
       JWT_SECRET: test-secret-test-secret-test-secret-123456
 
@@ -193,6 +192,7 @@ jobs:
       postgres:
         image: postgres:16
         env:
+          NODE_ENV: development
           POSTGRES_USER: treeo2_user
           POSTGRES_PASSWORD: treeo2_password
           POSTGRES_DB: treeo2
